@@ -1,11 +1,13 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
 import "package:flutter_reddit/core/constants/firebase_constants.dart";
 import "package:flutter_reddit/models/user.dart";
 import "package:flutter_reddit/typedefs/exception_typedefs.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:fpdart/fpdart.dart";
 import "package:google_sign_in/google_sign_in.dart";
+import "package:routemaster/routemaster.dart";
 
 final authRepositoryProvider =
     Provider<AuthRepository>((ref) => AuthRepository());
@@ -20,6 +22,12 @@ class AuthRepository {
   Stream<User?> get authState{
   final auth = FirebaseAuth.instance.authStateChanges();
   return auth;
+}
+
+Future<void> signOut(BuildContext contx) async{
+  await FirebaseAuth.instance.signOut().then((value){
+    Routemaster.of(contx).push("/");
+  });
 }
 
   late OAuthCredential credential;

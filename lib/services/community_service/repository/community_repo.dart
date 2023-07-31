@@ -41,6 +41,7 @@ class CommunityRepository {
 
   FutureVoid editCommunity(Community community) async {
     try {
+      print("community::"+community.banner);
       return right(
         _fireBaseCommunityCollection.doc(community.name).update(
               community.toMap(),
@@ -62,6 +63,19 @@ class CommunityRepository {
         comm.add(Community.fromMap(doc.data() as Map<String, dynamic>));
       }
       return comm;
+    });
+  }
+
+  Stream<List<Community>> searchCommunity(String query)    {
+    return _fireBaseCommunityCollection.where('id',isGreaterThanOrEqualTo: query).where('id',isLessThan: query+'z').snapshots().map((event){
+      List<Community> communities=[];
+
+      for(var doc in event.docs){
+        Community com=Community.fromMap(doc.data() as Map<String,dynamic>);
+        communities.add(com);
+      }
+      return communities;
+
     });
   }
 

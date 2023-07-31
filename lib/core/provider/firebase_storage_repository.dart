@@ -13,9 +13,11 @@ class FirebaseStorageRepository {
       {required String bucket, required String id, required File? file}) async {
     try {
       final ref =
-          _firebaseStorageInstance.ref().child(bucket).child(id).child(id);
-      ref.putFile(file!); 
-      return right(await ref.getDownloadURL());
+      _firebaseStorageInstance.ref().child(bucket).child(id).child(id);
+      UploadTask uploadTask=ref.putFile(file!); 
+      final snapshot=await uploadTask;
+      return Right(await snapshot.ref.getDownloadURL());
+
     } catch (error) {
       return left(error.toString());
     }

@@ -68,6 +68,10 @@ class _MyAppState extends ConsumerState<MyApp> {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primaryColor: Colors.red,
+            appBarTheme:AppBarTheme(
+              
+              backgroundColor: Pallete.appBarColor
+            )
           ),
         );
       },

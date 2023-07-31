@@ -9,4 +9,5 @@ class Pallete{
    static const borderColor1=Colors.blue;
    static const fontSize1=15.0;
    static const fontSize2=18.0;
+   
 }

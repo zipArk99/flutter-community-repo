@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reddit/models/user.dart';
 import 'package:flutter_reddit/services/auth/repository/auth_repo.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:routemaster/routemaster.dart';
 
 final authControllerProvider = StateNotifierProvider<AuthController, bool>(
   (ref) => AuthController(
@@ -36,13 +37,17 @@ class AuthController extends StateNotifier<bool> {
     return _authRepository.getUserById(userId);
   }
 
+  void signOutUser(){
+    //_authRepository.signOut();
+  
+  }
+
   void signWithGoogle(BuildContext context) async {
     state = true;
     final user = await _authRepository.signInWithGoolge();
     state = false;
     user.fold(
       (l) {
-        print("callied+++++++++++++++++++++++++++++++");
         return ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(
@@ -52,7 +57,6 @@ class AuthController extends StateNotifier<bool> {
           );
       },
       (r) {
-        print("callied------------------------------");
         _ref.read(userProvider.notifier).update((state) => r);
       },
     );
