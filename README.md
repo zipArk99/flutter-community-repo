@@ -1,4 +1,4 @@
-# flutter_reddit
+# community_flutter
 
 A new Flutter project.
 
